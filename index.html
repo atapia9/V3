@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosaico Digital Acambaro</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Mosaico Digital Acambaro</h1>
+            <p class="tagline">Tu espacio publicitario en el corazón de Acámbaro</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="grid-section">
+                <h2>Mosaico de Pixels</h2>
+                <p class="grid-info">1024×800 px | 8,160 bloques disponibles | $100 USD por bloque</p>
+                <div class="grid-container">
+                    <div id="pixel-grid" class="pixel-grid" title="Haz clic en un bloque para comprarlo">
+                        <!-- Los bloques se renderizarán aquí -->
+                    </div>
+                </div>
+                <div class="grid-legend">
+                    <span class="legend-item"><span class="legend-color available"></span> Disponible</span>
+                    <span class="legend-item"><span class="legend-color occupied"></span> Ocupado</span>
+                    <span class="legend-item"><span class="legend-color selected"></span> Seleccionado</span>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <div class="info-card">
+                    <h3>¿Cómo funciona?</h3>
+                    <ul>
+                        <li>Selecciona un bloque disponible en el mosaico</li>
+                        <li>Elige un color o imagen para tu publicidad</li>
+                        <li>Proporciona tu URL y nombre de negocio</li>
+                        <li>¡Tu publicidad estará visible las 24 horas!</li>
+                    </ul>
+                </div>
+                <div class="info-card pricing-card">
+                    <h3>Precios</h3>
+                    <div class="price">
+                        <span class="price-amount">$100</span>
+                        <span class="price-currency">USD</span>
+                    </div>
+                    <p class="price-description">Por cada bloque de 10×10 pixels</p>
+                    <ul class="features-list">
+                        <li>✓ Visibilidad permanente</li>
+                        <li>✓ Enlace a tu sitio web</li>
+                        <li>✓ Tu marca o imagen</li>
+                        <li>✓ Exposición local y global</li>
+                    </ul>
+                </div>
+                <div class="info-card stats-card">
+                    <h3>Estado del Mosaico</h3>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-number" id="total-blocks">8,160</span>
+                            <span class="stat-label">Total de Bloques</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="occupied-blocks">0</span>
+                            <span class="stat-label">Bloques Ocupados</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="available-blocks">8,160</span>
+                            <span class="stat-label">Bloques Disponibles</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal de compra -->
+    <div id="purchase-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Comprar Bloque</h2>
+            <div class="selected-block-info">
+                <p>Bloque seleccionado: <strong id="selected-position">-</strong></p>
+            </div>
+            <form id="purchase-form">
+                <div class="form-group">
+                    <label for="advertiser">Nombre del anunciante / Negocio:</label>
+                    <input type="text" id="advertiser" name="advertiser" required placeholder="Ej: Restaurant La Casa">
+                </div>
+                <div class="form-group">
+                    <label for="url">URL de tu sitio web:</label>
+                    <input type="url" id="url" name="url" required placeholder="https://tunegocio.com">
+                </div>
+                <div class="form-group">
+                    <label for="color">Color de tu bloque:</label>
+                    <input type="color" id="color" name="color" value="#3498db" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">URL de imagen (opcional):</label>
+                    <input type="url" id="image" name="image" placeholder="https://tunegocio.com/imagen.jpg">
+                </div>
+                <div class="form-summary">
+                    <p>Precio: <strong>$100 USD</strong></p>
+                </div>
+                <button type="submit" class="btn-submit">Confirmar Compra</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tooltip para información del bloque -->
+    <div id="block-tooltip" class="tooltip"></div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Mosaico Digital Acambaro. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
