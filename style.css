@@ -12,6 +12,25 @@
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
     --transition: all 0.3s ease;
+    --grid-background: #ffffff;
+    --pixel-border: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --primary-color: #1a252f;
+    --secondary-color: #5dade2;
+    --accent-color: #ec7063;
+    --success-color: #58d68d;
+    --background-color: #1a1a2e;
+    --card-background: #16213e;
+    --text-color: #e0e0e0;
+    --text-light: #a0a0a0;
+    --border-color: #2d3748;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.4);
+    --grid-background: #0f0f1a;
+    --pixel-border: rgba(255, 255, 255, 0.1);
 }
 
 /* Reset & Base */
@@ -44,6 +63,68 @@ body {
     box-shadow: var(--shadow);
 }
 
+.header-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.language-selector {
+    z-index: 100;
+}
+
+.selector {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.selector:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.selector option {
+    background: var(--primary-color);
+    color: white;
+}
+
+.dark-mode-toggle {
+    z-index: 100;
+}
+
+.theme-toggle {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-icon {
+    font-size: 1.1rem;
+}
+
 .logo {
     font-size: 2.5rem;
     font-weight: 700;
@@ -67,6 +148,19 @@ body {
     margin-bottom: 50px;
 }
 
+/* Section Separator */
+.section-separator {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+    margin: 40px 0;
+    opacity: 0.5;
+}
+
+[data-theme="dark"] .section-separator {
+    background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+    opacity: 0.3;
+}
+
 .grid-section h2 {
     font-size: 2rem;
     color: var(--primary-color);
@@ -87,6 +181,7 @@ body {
     margin-bottom: 25px;
     overflow-x: auto;
     padding: 10px;
+    position: relative;
 }
 
 .pixel-grid {
@@ -94,7 +189,7 @@ body {
     grid-template-columns: repeat(102, 10px);
     grid-template-rows: repeat(80, 10px);
     gap: 0;
-    background-color: #ffffff;
+    background-color: var(--grid-background);
     border: 3px solid var(--primary-color);
     box-shadow: var(--shadow-hover);
     cursor: pointer;
@@ -106,7 +201,7 @@ body {
 .pixel-block {
     width: 10px;
     height: 10px;
-    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border: 0.5px solid var(--pixel-border);
     transition: var(--transition);
     position: relative;
 }
@@ -118,11 +213,81 @@ body {
 }
 
 .pixel-block.available {
-    background-color: #f0f0f0;
+    background-color: var(--grid-background);
 }
 
 .pixel-block.available:hover {
-    background-color: #e0e0e0;
+    background-color: var(--border-color);
+}
+
+/* Debug Overlay Grid */
+.debug-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    display: none;
+}
+
+.debug-overlay.active {
+    display: block;
+}
+
+.debug-overlay .debug-row {
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    border-top: 1px solid rgba(255, 0, 0, 0.15);
+}
+
+.debug-overlay .debug-col {
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    border-left: 1px solid rgba(255, 0, 0, 0.15);
+}
+
+/* Debug major grid lines every 10 blocks */
+.debug-overlay .debug-major-row {
+    border-top: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+.debug-overlay .debug-major-col {
+    border-left: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+/* Debug toggle button */
+.debug-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+.debug-toggle:hover {
+    opacity: 1;
+}
+
+.debug-toggle.active {
+    background: var(--success-color);
+}
+
+/* Grid container with debug support */
+.grid-container {
+    position: relative;
 }
 
 .pixel-block.occupied {
@@ -156,7 +321,8 @@ body {
 }
 
 .legend-color.available {
-    background-color: #f0f0f0;
+    background-color: var(--grid-background);
+    border-color: var(--text-light);
 }
 
 .legend-color.occupied {

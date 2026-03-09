@@ -12,66 +12,85 @@
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo">Mosaico Digital Acambaro</h1>
-            <p class="tagline">Tu espacio publicitario en el corazón de Acámbaro</p>
+            <div class="header-controls">
+                <div class="language-selector">
+                    <select id="language-select" class="selector">
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="pt">Português</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="dark-mode-toggle">
+                    <button id="dark-mode-btn" class="theme-toggle" aria-label="Toggle dark mode">
+                        <span class="theme-icon">☀️</span>
+                        <span class="theme-text" data-translate="lightMode">Modo Claro</span>
+                    </button>
+                </div>
+            </div>
+            <h1 class="logo" data-translate="logo">Mosaico Digital Acambaro</h1>
+            <p class="tagline" data-translate="tagline">Tu espacio publicitario en el corazón de Acámbaro</p>
         </div>
     </header>
 
     <main class="main-content">
         <div class="container">
             <section class="grid-section">
-                <h2>Mosaico de Pixels</h2>
-                <p class="grid-info">1024×800 px | 8,160 bloques disponibles | $100 USD por bloque</p>
+                <h2 data-translate="pixelMosaic">Mosaico de Pixels</h2>
+                <p class="grid-info" data-translate="gridInfo">1024×800 px | 8,160 bloques disponibles | $100 USD por bloque</p>
                 <div class="grid-container">
-                    <div id="pixel-grid" class="pixel-grid" title="Haz clic en un bloque para comprarlo">
+                    <div id="pixel-grid" class="pixel-grid" title="" data-translate-title="gridClick">
                         <!-- Los bloques se renderizarán aquí -->
                     </div>
+                    <div id="debug-overlay" class="debug-overlay"></div>
                 </div>
+                <button id="debug-toggle" class="debug-toggle" data-translate="debugMode">Debug Grid</button>
                 <div class="grid-legend">
-                    <span class="legend-item"><span class="legend-color available"></span> Disponible</span>
-                    <span class="legend-item"><span class="legend-color occupied"></span> Ocupado</span>
-                    <span class="legend-item"><span class="legend-color selected"></span> Seleccionado</span>
+                    <span class="legend-item"><span class="legend-color available"></span> <span data-translate="available">Disponible</span></span>
+                    <span class="legend-item"><span class="legend-color occupied"></span> <span data-translate="occupied">Ocupado</span></span>
+                    <span class="legend-item"><span class="legend-color selected"></span> <span data-translate="selected">Seleccionado</span></span>
                 </div>
             </section>
+            <div class="section-separator"></div>
 
             <section class="info-section">
                 <div class="info-card">
-                    <h3>¿Cómo funciona?</h3>
+                    <h3 data-translate="howItWorks">¿Cómo funciona?</h3>
                     <ul>
-                        <li>Selecciona un bloque disponible en el mosaico</li>
-                        <li>Elige un color o imagen para tu publicidad</li>
-                        <li>Proporciona tu URL y nombre de negocio</li>
-                        <li>¡Tu publicidad estará visible las 24 horas!</li>
+                        <li data-translate="step1">Selecciona un bloque disponible en el mosaico</li>
+                        <li data-translate="step2">Elige un color o imagen para tu publicidad</li>
+                        <li data-translate="step3">Proporciona tu URL y nombre de negocio</li>
+                        <li data-translate="step4">¡Tu publicidad estará visible las 24 horas!</li>
                     </ul>
                 </div>
                 <div class="info-card pricing-card">
-                    <h3>Precios</h3>
+                    <h3 data-translate="pricing">Precios</h3>
                     <div class="price">
                         <span class="price-amount">$100</span>
                         <span class="price-currency">USD</span>
                     </div>
-                    <p class="price-description">Por cada bloque de 10×10 pixels</p>
+                    <p class="price-description" data-translate="priceDescription">Por cada bloque de 10×10 pixels</p>
                     <ul class="features-list">
-                        <li>✓ Visibilidad permanente</li>
-                        <li>✓ Enlace a tu sitio web</li>
-                        <li>✓ Tu marca o imagen</li>
-                        <li>✓ Exposición local y global</li>
+                        <li data-translate="feature1">✓ Visibilidad permanente</li>
+                        <li data-translate="feature2">✓ Enlace a tu sitio web</li>
+                        <li data-translate="feature3">✓ Tu marca o imagen</li>
+                        <li data-translate="feature4">✓ Exposición local y global</li>
                     </ul>
                 </div>
                 <div class="info-card stats-card">
-                    <h3>Estado del Mosaico</h3>
+                    <h3 data-translate="mosaicStatus">Estado del Mosaico</h3>
                     <div class="stats">
                         <div class="stat">
                             <span class="stat-number" id="total-blocks">8,160</span>
-                            <span class="stat-label">Total de Bloques</span>
+                            <span class="stat-label" data-translate="totalBlocks">Total de Bloques</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="occupied-blocks">0</span>
-                            <span class="stat-label">Bloques Ocupados</span>
+                            <span class="stat-label" data-translate="occupiedBlocks">Bloques Ocupados</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="available-blocks">8,160</span>
-                            <span class="stat-label">Bloques Disponibles</span>
+                            <span class="stat-label" data-translate="availableBlocks">Bloques Disponibles</span>
                         </div>
                     </div>
                 </div>
@@ -83,31 +102,31 @@
     <div id="purchase-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2>Comprar Bloque</h2>
+            <h2 data-translate="buyBlock">Comprar Bloque</h2>
             <div class="selected-block-info">
-                <p>Bloque seleccionado: <strong id="selected-position">-</strong></p>
+                <p><span data-translate="selectedBlock">Bloque seleccionado</span>: <strong id="selected-position">-</strong></p>
             </div>
             <form id="purchase-form">
                 <div class="form-group">
-                    <label for="advertiser">Nombre del anunciante / Negocio:</label>
-                    <input type="text" id="advertiser" name="advertiser" required placeholder="Ej: Restaurant La Casa">
+                    <label for="advertiser" data-translate="advertiserLabel">Nombre del anunciante / Negocio:</label>
+                    <input type="text" id="advertiser" name="advertiser" required placeholder="Ej: Restaurant La Casa" data-translate-placeholder="advertiserPlaceholder">
                 </div>
                 <div class="form-group">
-                    <label for="url">URL de tu sitio web:</label>
-                    <input type="url" id="url" name="url" required placeholder="https://tunegocio.com">
+                    <label for="url" data-translate="urlLabel">URL de tu sitio web:</label>
+                    <input type="url" id="url" name="url" required placeholder="https://tunegocio.com" data-translate-placeholder="urlPlaceholder">
                 </div>
                 <div class="form-group">
-                    <label for="color">Color de tu bloque:</label>
+                    <label for="color" data-translate="colorLabel">Color de tu bloque:</label>
                     <input type="color" id="color" name="color" value="#3498db" required>
                 </div>
                 <div class="form-group">
-                    <label for="image">URL de imagen (opcional):</label>
-                    <input type="url" id="image" name="image" placeholder="https://tunegocio.com/imagen.jpg">
+                    <label for="image" data-translate="imageLabel">URL de imagen (opcional):</label>
+                    <input type="url" id="image" name="image" placeholder="https://tunegocio.com/imagen.jpg" data-translate-placeholder="imagePlaceholder">
                 </div>
                 <div class="form-summary">
-                    <p>Precio: <strong>$100 USD</strong></p>
+                    <p><span data-translate="price">Precio</span>: <strong>$100 USD</strong></p>
                 </div>
-                <button type="submit" class="btn-submit">Confirmar Compra</button>
+                <button type="submit" class="btn-submit" data-translate="confirmPurchase">Confirmar Compra</button>
             </form>
         </div>
     </div>
@@ -117,7 +136,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Mosaico Digital Acambaro. Todos los derechos reservados.</p>
+            <p>&copy; 2026 <span data-translate="footerText">Mosaico Digital Acambaro. Todos los derechos reservados.</span></p>
         </div>
     </footer>
 
