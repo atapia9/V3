@@ -37,7 +37,7 @@
         <div class="container">
             <section class="grid-section">
                 <h2 data-translate="pixelMosaic">Mosaico de Pixels</h2>
-                <p class="grid-info" data-translate="gridInfo">1024×800 px | 8,160 bloques disponibles | $100 USD por bloque</p>
+                <p class="grid-info" data-translate="gridInfo">675×675 px | 2,025 bloques disponibles | $10 MXN por pixel ($2,250 por bloque)</p>
                 <div class="grid-container">
                     <div id="pixel-grid" class="pixel-grid" title="" data-translate-title="gridClick">
                         <!-- Los bloques se renderizarán aquí -->
@@ -66,10 +66,10 @@
                 <div class="info-card pricing-card">
                     <h3 data-translate="pricing">Precios</h3>
                     <div class="price">
-                        <span class="price-amount">$100</span>
-                        <span class="price-currency">USD</span>
+                        <span class="price-amount">$2,250</span>
+                        <span class="price-currency">MXN</span>
                     </div>
-                    <p class="price-description" data-translate="priceDescription">Por cada bloque de 10×10 pixels</p>
+                    <p class="price-description" data-translate="priceDescription">Por cada bloque de 15×15 pixels (225 pixeles)</p>
                     <ul class="features-list">
                         <li data-translate="feature1">✓ Visibilidad permanente</li>
                         <li data-translate="feature2">✓ Enlace a tu sitio web</li>
@@ -81,7 +81,7 @@
                     <h3 data-translate="mosaicStatus">Estado del Mosaico</h3>
                     <div class="stats">
                         <div class="stat">
-                            <span class="stat-number" id="total-blocks">8,160</span>
+                            <span class="stat-number" id="total-blocks">2,025</span>
                             <span class="stat-label" data-translate="totalBlocks">Total de Bloques</span>
                         </div>
                         <div class="stat">
@@ -89,7 +89,7 @@
                             <span class="stat-label" data-translate="occupiedBlocks">Bloques Ocupados</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number" id="available-blocks">8,160</span>
+                            <span class="stat-number" id="available-blocks">2,025</span>
                             <span class="stat-label" data-translate="availableBlocks">Bloques Disponibles</span>
                         </div>
                     </div>
@@ -124,9 +124,16 @@
                     <input type="url" id="image" name="image" placeholder="https://tunegocio.com/imagen.jpg" data-translate-placeholder="imagePlaceholder">
                 </div>
                 <div class="form-summary">
-                    <p><span data-translate="price">Precio</span>: <strong>$100 USD</strong></p>
+                    <div class="price-breakdown">
+                        <h4>Detalle del precio:</h4>
+                        <p>Tamaño del bloque: <strong>15×15 = 225 pixeles</strong></p>
+                        <p>Precio por pixel: <strong>$10 MXN</strong></p>
+                        <p class="total-price">Total: <strong>$2,250 MXN</strong></p>
+                    </div>
                 </div>
-                <button type="submit" class="btn-submit" data-translate="confirmPurchase">Confirmar Compra</button>
+                <button type="submit" class="btn-submit btn-buy" data-translate="confirmPurchase">
+                    <span class="btn-icon">🛒</span> Comprar Ahora - $2,250 MXN
+                </button>
             </form>
         </div>
     </div>

@@ -30,7 +30,7 @@
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.4);
     --grid-background: #0f0f1a;
-    --pixel-border: rgba(255, 255, 255, 0.1);
+    --pixel-border: rgba(255, 255, 255, 0.2);
 }
 
 /* Reset & Base */
@@ -188,62 +188,75 @@ body {
 
 .pixel-grid {
     display: grid;
-    grid-template-columns: repeat(102, 10px);
-    grid-template-rows: repeat(80, 10px);
-    gap: 0;
+    grid-template-columns: repeat(45, 15px);
+    grid-template-rows: repeat(45, 15px);
+    gap: 1px;
     background-color: var(--grid-background);
     border: 3px solid var(--primary-color);
     box-shadow: var(--shadow-hover);
     cursor: pointer;
-    /* Responsive: use transform for scaling, allow horizontal scroll */
-    transform: scale(0.6);
+    /* Responsive: use transform for scaling */
+    transform: scale(1);
     transform-origin: top center;
     flex-shrink: 0;
+    /* Grid separator pattern - visible at all times */
+    background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 16px 16px;
+}
+
+/* Dark mode grid separators */
+[data-theme="dark"] .pixel-grid {
+    background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
 }
 
 /* Responsive: adjust scale based on container width */
 @media (max-width: 1100px) {
     .pixel-grid {
-        transform: scale(0.5);
+        transform: scale(0.9);
     }
 }
 
 @media (max-width: 900px) {
     .pixel-grid {
-        transform: scale(0.45);
+        transform: scale(0.8);
     }
 }
 
 @media (max-width: 768px) {
     .pixel-grid {
-        transform: scale(0.4);
+        transform: scale(0.7);
     }
 }
 
 @media (max-width: 600px) {
     .pixel-grid {
-        transform: scale(0.35);
+        transform: scale(0.6);
     }
 }
 
 @media (max-width: 480px) {
     .pixel-grid {
-        transform: scale(0.3);
+        transform: scale(0.5);
     }
 }
 
 .pixel-block {
-    width: 10px;
-    height: 10px;
-    border: 0.5px solid var(--pixel-border);
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--pixel-border);
     transition: var(--transition);
     position: relative;
+    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15);
 }
 
 .pixel-block:hover {
-    transform: scale(1.2);
+    transform: scale(1.05);
     z-index: 10;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 0 2px var(--secondary-color);
 }
 
 .pixel-block.available {
@@ -273,24 +286,24 @@ body {
 .debug-overlay .debug-row {
     position: absolute;
     width: 100%;
-    height: 10px;
-    border-top: 1px solid rgba(255, 0, 0, 0.15);
+    height: 15px;
+    border-top: 1px solid rgba(255, 0, 0, 0.3);
 }
 
 .debug-overlay .debug-col {
     position: absolute;
-    width: 10px;
+    width: 15px;
     height: 100%;
-    border-left: 1px solid rgba(255, 0, 0, 0.15);
+    border-left: 1px solid rgba(255, 0, 0, 0.3);
 }
 
-/* Debug major grid lines every 10 blocks */
+/* Debug major grid lines every 5 blocks */
 .debug-overlay .debug-major-row {
-    border-top: 1px solid rgba(255, 0, 0, 0.4);
+    border-top: 2px solid rgba(255, 0, 0, 0.6);
 }
 
 .debug-overlay .debug-major-col {
-    border-left: 1px solid rgba(255, 0, 0, 0.4);
+    border-left: 2px solid rgba(255, 0, 0, 0.6);
 }
 
 /* Debug toggle button */
@@ -640,6 +653,10 @@ body {
     cursor: pointer;
     transition: var(--transition);
     font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .btn-submit:hover {
@@ -649,6 +666,52 @@ body {
 
 .btn-submit:active {
     transform: translateY(0);
+}
+
+/* Enhanced buy button styling */
+.btn-buy {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%) !important;
+}
+
+.btn-buy:hover {
+    box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4) !important;
+}
+
+/* Form Summary */
+.form-summary {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid var(--secondary-color);
+}
+
+[data-theme="dark"] .form-summary {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.price-breakdown {
+    text-align: center;
+}
+
+.price-breakdown h4 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.price-breakdown p {
+    margin: 5px 0;
+    color: var(--text-light);
+}
+
+.price-breakdown .total-price {
+    font-size: 1.4rem;
+    color: var(--success-color);
+    font-weight: 700;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 2px dashed var(--border-color);
 }
 
 /* Tooltip */

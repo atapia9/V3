@@ -1,7 +1,12 @@
 // Configuration
 const API_BASE_URL = 'https://daae643f-cc64-4281-9aa9-4720a70a1e76.builder.kiloapps.io';
-const TOTAL_BLOCKS = 8160; // 1024x800 / 100 = 8160 blocks (10x10 pixels each)
-const BLOCK_PRICE = 100; // USD
+const TOTAL_BLOCKS = 2025; // 45x45 = 2025 blocks
+const BLOCK_PRICE = 2250; // 225 pixels (15x15) × $10 MXN = $2,250 MXN per block
+const PIXEL_PRICE = 10; // $10 MXN per pixel
+const GRID_COLUMNS = 45; 
+const GRID_ROWS = 45;
+const BLOCK_SIZE = 15; // 15x15 pixels per block
+const PIXELS_PER_BLOCK = 225; // 15 × 15
 
 // Translations object
 const translations = {
@@ -11,7 +16,7 @@ const translations = {
         lightMode: 'Modo Claro',
         darkMode: 'Modo Oscuro',
         pixelMosaic: 'Mosaico de Pixels',
-        gridInfo: '1024×800 px | 8,160 bloques disponibles | $100 USD por bloque',
+        gridInfo: '675×675 px | 2,025 bloques disponibles | $10 MXN por pixel ($2,250 por bloque)',
         gridClick: 'Haz clic en un bloque para comprarlo',
         available: 'Disponible',
         occupied: 'Ocupado',
@@ -22,7 +27,7 @@ const translations = {
         step3: 'Proporciona tu URL y nombre de negocio',
         step4: '¡Tu publicidad estará visible las 24 horas!',
         pricing: 'Precios',
-        priceDescription: 'Por cada bloque de 10×10 pixels',
+        priceDescription: 'Por cada bloque de 15×15 pixels (225 pixeles)',
         feature1: '✓ Visibilidad permanente',
         feature2: '✓ Enlace a tu sitio web',
         feature3: '✓ Tu marca o imagen',
@@ -40,7 +45,9 @@ const translations = {
         colorLabel: 'Color de tu bloque:',
         imageLabel: 'URL de imagen (opcional):',
         imagePlaceholder: 'https://tunegocio.com/imagen.jpg',
-        price: 'Precio',
+        price: 'Precio ($10 MXN por pixel)',
+        pricePerPixel: '$10 MXN por pixel',
+        pricePerBlock: '$2,250 MXN por bloque (225 pixeles)',
         confirmPurchase: 'Confirmar Compra',
         footerText: 'Mosaico Digital Acambaro. Todos los derechos reservados.',
         debugMode: 'Debug Grid',
@@ -59,7 +66,7 @@ const translations = {
         lightMode: 'Light Mode',
         darkMode: 'Dark Mode',
         pixelMosaic: 'Pixel Mosaic',
-        gridInfo: '1024×800 px | 8,160 blocks available | $100 USD per block',
+        gridInfo: '675×675 px | 2,025 blocks available | $10 MXN per pixel ($2,250 per block)',
         gridClick: 'Click on a block to purchase it',
         available: 'Available',
         occupied: 'Occupied',
@@ -70,7 +77,7 @@ const translations = {
         step3: 'Provide your URL and business name',
         step4: 'Your advertisement will be visible 24 hours!',
         pricing: 'Pricing',
-        priceDescription: 'For each 10×10 pixel block',
+        priceDescription: 'For each 15×15 pixel block (225 pixels)',
         feature1: '✓ Permanent visibility',
         feature2: '✓ Link to your website',
         feature3: '✓ Your brand or image',
@@ -107,7 +114,7 @@ const translations = {
         lightMode: 'Mode Clair',
         darkMode: 'Mode Sombre',
         pixelMosaic: 'Mosaïque de Pixels',
-        gridInfo: '1024×800 px | 8 160 blocs disponibles | 100 USD par bloc',
+        gridInfo: '675×675 px | 2 025 blocs disponibles | 10 MXN par pixel (2 250 MXN par bloc)',
         gridClick: 'Cliquez sur un bloc pour l\'acheter',
         available: 'Disponible',
         occupied: 'Occupé',
@@ -118,7 +125,7 @@ const translations = {
         step3: 'Fournissez votre URL et le nom de votre entreprise',
         step4: 'Votre publicité sera visible 24 heures sur 24!',
         pricing: 'Tarification',
-        priceDescription: 'Pour chaque bloc de 10×10 pixels',
+        priceDescription: 'Pour chaque bloc de 15×15 pixels (225 pixels)',
         feature1: '✓ Visibilité permanente',
         feature2: '✓ Lien vers votre site web',
         feature3: '✓ Votre marque ou image',
@@ -155,7 +162,7 @@ const translations = {
         lightMode: 'Modo Claro',
         darkMode: 'Modo Escuro',
         pixelMosaic: 'Mosaico de Pixels',
-        gridInfo: '1024×800 px | 8.160 blocos disponíveis | $100 USD por bloco',
+        gridInfo: '675×675 px | 2.025 blocos disponíveis | $10 MXN por pixel ($2.250 por bloco)',
         gridClick: 'Clique em um bloco para comprá-lo',
         available: 'Disponível',
         occupied: 'Ocupado',
@@ -166,7 +173,7 @@ const translations = {
         step3: 'Forneça sua URL e nome da empresa',
         step4: 'Sua publicidade estará visível 24 horas!',
         pricing: 'Preços',
-        priceDescription: 'Para cada bloco de 10×10 pixels',
+        priceDescription: 'Para cada bloco de 15×15 pixels (225 pixels)',
         feature1: '✓ Visibilidade permanente',
         feature2: '✓ Link para seu site',
         feature3: '✓ Sua marca ou imagem',
@@ -287,31 +294,31 @@ function toggleDebugGrid() {
 function renderDebugGrid() {
     debugOverlay.innerHTML = '';
     
-    const gridWidth = 1020; // 102 columns * 10px
-    const gridHeight = 800; // 80 rows * 10px
+    const gridWidth = GRID_COLUMNS * BLOCK_SIZE; // 45 * 15 = 675px
+    const gridHeight = GRID_ROWS * BLOCK_SIZE; // 45 * 15 = 675px
     
     debugOverlay.style.width = gridWidth + 'px';
     debugOverlay.style.height = gridHeight + 'px';
     
     // Create vertical grid lines (columns)
-    for (let col = 0; col <= 102; col++) {
+    for (let col = 0; col <= GRID_COLUMNS; col++) {
         const colLine = document.createElement('div');
         colLine.className = 'debug-col';
-        if (col % 10 === 0) {
+        if (col % 5 === 0) { // Major line every 5 blocks
             colLine.classList.add('debug-major-col');
         }
-        colLine.style.left = (col * 10) + 'px';
+        colLine.style.left = (col * BLOCK_SIZE) + 'px';
         debugOverlay.appendChild(colLine);
     }
     
     // Create horizontal grid lines (rows)
-    for (let row = 0; row <= 80; row++) {
+    for (let row = 0; row <= GRID_ROWS; row++) {
         const rowLine = document.createElement('div');
         rowLine.className = 'debug-row';
-        if (row % 10 === 0) {
+        if (row % 5 === 0) { // Major line every 5 blocks
             rowLine.classList.add('debug-major-row');
         }
-        rowLine.style.top = (row * 10) + 'px';
+        rowLine.style.top = (row * BLOCK_SIZE) + 'px';
         debugOverlay.appendChild(rowLine);
     }
 }
@@ -637,7 +644,7 @@ function showTooltip(e, position) {
             content += `<br>${t('occupied')}`;
         }
     } else {
-        content += `<br>${t('blockAvailable')} - ${BLOCK_PRICE} USD`;
+        content += `<br>${t('blockAvailable')} - ${BLOCK_PRICE.toLocaleString()} MXN`;
     }
     
     blockTooltip.innerHTML = content;
