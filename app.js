@@ -393,22 +393,58 @@ function updateTooltipContent() {
     });
 }
 
-// Initialize empty grid
+// Initialize empty grid - optimized with DocumentFragment for better performance
 function initGrid() {
     pixelGrid.innerHTML = '';
+    
+    // Use DocumentFragment for batch DOM insertion (performance optimization)
+    const fragment = document.createDocumentFragment();
     
     for (let i = 0; i < TOTAL_BLOCKS; i++) {
         const block = document.createElement('div');
         block.className = 'pixel-block available';
         block.dataset.position = i;
         
-        // Add hover events
-        block.addEventListener('mouseenter', (e) => showTooltip(e, i));
-        block.addEventListener('mouseleave', hideTooltip);
-        block.addEventListener('click', () => handleBlockClick(i));
+        // Add hover events using event delegation (performance optimization)
+        // Events are handled by the grid container, not individual blocks
         
-        pixelGrid.appendChild(block);
+        // Store index for event delegation
+        block.dataset.index = i;
+        
+        fragment.appendChild(block);
     }
+    
+    // Single DOM insertion instead of 8,160 insertions
+    pixelGrid.appendChild(fragment);
+    
+    // Set up event delegation for better performance
+    setupEventDelegation();
+}
+
+// Event delegation for hover and click (performance optimization)
+function setupEventDelegation() {
+    pixelGrid.addEventListener('mouseover', (e) => {
+        const block = e.target.closest('.pixel-block');
+        if (block) {
+            const index = parseInt(block.dataset.index, 10);
+            showTooltip(e, index);
+        }
+    });
+    
+    pixelGrid.addEventListener('mouseout', (e) => {
+        const block = e.target.closest('.pixel-block');
+        if (block) {
+            hideTooltip();
+        }
+    });
+    
+    pixelGrid.addEventListener('click', (e) => {
+        const block = e.target.closest('.pixel-block');
+        if (block) {
+            const index = parseInt(block.dataset.index, 10);
+            handleBlockClick(index);
+        }
+    });
 }
 
 // Fetch blocks from API
